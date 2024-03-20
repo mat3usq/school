@@ -11755,7 +11755,7 @@ fieldset:disabled .btn {
     --bg-grey: #f4f4f4;
     --bg-light: #fbfbfb;
     --box-shadow: 0 0.5rem 1rem rgb(12 12 12 / 5%);
-    --banner-layer: rgb(255 255 255 / 70%);
+    --banner-layer: rgb(255 255 255 / 90%);
     --gradient-color: linear-gradient(to left, #11d5ff 0%, #0089cd 100%);
     --gradient-color-banner: linear-gradient(to left, #00c9f5 0%, #00a4f5 100%);
     --layer: rgb(1 121 179 / 75%);
@@ -21117,6 +21117,64 @@ h4.inner-text-title {
 }
 
 /* //contact section */
+
+/* login section */
+.login-block input,
+.login-block textarea {
+    width: 100%;
+    color: var(--heading-color);
+    background: var(--bg-grey);
+    font-size: 16px;
+    padding: 14px;
+    border: 2px solid var(--border-color-light);
+    outline: none;
+    margin-bottom: 20px;
+    border-radius: var(--border-radius);
+}
+
+.log-left.text-center i {
+    color: var(--secondary-color);
+    font-size: 26px;
+}
+
+.login-block textarea {
+    height: 180px;
+    margin: 0 0 20px 0;
+}
+
+.login-block input:focus,
+.login-block textarea:focus {
+    border: 2px solid var(--secondary-color);
+    background: var(--bg-color);
+}
+
+.login-left {
+    box-shadow: var(--box-shadow);
+    padding: 40px;
+}
+
+.login-center {
+    float: none;
+    margin: auto;
+}
+
+.log-details p a:hover {
+    color: var(--secondary-color);
+}
+
+.log-details h6 {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 18px;
+    margin-bottom: 8px;
+}
+
+.new-user {
+    color: var(--secondary-color);
+    margin-left: 40%;
+}
+
+/* //login section */
 
 /* team block */
 .w3l-team-13 .left-side h4 {
