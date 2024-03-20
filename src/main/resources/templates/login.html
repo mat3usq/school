@@ -40,14 +40,16 @@
         </div>
         <div class="row login-block">
             <div class="col-md-6 login-center">
-                <form action="/login" method="post" class="signin-form">
+                <form th:action="@{/login}" method="post" class="signin-form">
                     <div class="col-md-8 login-center input-grids">
-                        <li class="alert alert-danger" role="alert" th:if="${!#strings.isEmpty(errorMessge)}"
-                            th:text="${errorMessge}"/>
+                        <li class="alert alert-info" role="alert" th:if="${!#strings.isEmpty(logoutMessage)}"
+                            th:text="${logoutMessage}"/>
                         <input type="text" name="username" id="username" placeholder="Username"
                                class="login-input"/>
                         <input type="password" name="password" id="password" placeholder="Password"
                                class="login-input"/>
+                        <li class="alert alert-danger" role="alert" th:if="${!#strings.isEmpty(loginMessage)}"
+                            th:text="${loginMessage}"/>
                     </div>
                     <div class="col-md-8 login-center text-start">
                         <button class="btn btn-style btn-style-3 text-left">Log In</button>
