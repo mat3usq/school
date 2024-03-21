@@ -11755,7 +11755,7 @@ fieldset:disabled .btn {
     --bg-grey: #f4f4f4;
     --bg-light: #fbfbfb;
     --box-shadow: 0 0.5rem 1rem rgb(12 12 12 / 5%);
-    --banner-layer: rgb(255 255 255 / 90%);
+    --banner-layer: rgb(255 255 255 / 70%);
     --gradient-color: linear-gradient(to left, #11d5ff 0%, #0089cd 100%);
     --gradient-color-banner: linear-gradient(to left, #00c9f5 0%, #00a4f5 100%);
     --layer: rgb(1 121 179 / 75%);

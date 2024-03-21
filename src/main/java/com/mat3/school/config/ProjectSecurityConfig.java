@@ -16,7 +16,8 @@ public class ProjectSecurityConfig {
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         // Permit All Requests inside the Web Application
-        http.authorizeHttpRequests(requests -> requests
+        http.csrf(csrf -> csrf.ignoringRequestMatchers("/saveMsg"))
+                .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/dashboard").authenticated()
                         .requestMatchers("/", "/home").permitAll()
                         .requestMatchers("/holidays/**").permitAll()
@@ -25,14 +26,14 @@ public class ProjectSecurityConfig {
                         .requestMatchers("/courses").permitAll()
                         .requestMatchers("/about").permitAll()
                         .requestMatchers("/assets/**").permitAll()
-                        .requestMatchers("/login").permitAll())
+                        .requestMatchers("/login").permitAll()
+                        .requestMatchers("/logout").permitAll())
                 .formLogin(login -> login
                         .loginPage("/login")
                         .defaultSuccessUrl("/dashboard")
                         .failureUrl("/login?error=true")
                         .permitAll())
                 .logout(logout -> logout
-                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
                         .logoutSuccessUrl("/login?logout=true")
                         .invalidateHttpSession(true)
                         .permitAll())

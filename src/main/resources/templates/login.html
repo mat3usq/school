@@ -48,6 +48,7 @@
                                class="login-input"/>
                         <input type="password" name="password" id="password" placeholder="Password"
                                class="login-input"/>
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                         <li class="alert alert-danger" role="alert" th:if="${!#strings.isEmpty(loginMessage)}"
                             th:text="${loginMessage}"/>
                     </div>
