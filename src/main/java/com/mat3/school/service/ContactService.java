@@ -21,8 +21,12 @@ Logger static property in the class at compilation time.
 @Slf4j
 @Service
 public class ContactService {
+    private final ContactRepository contactRepository;
     @Autowired
-    private ContactRepository contactRepository;
+    public ContactService(ContactRepository contactRepository) {
+        this.contactRepository = contactRepository;
+    }
+
     /**
      * Save Contact Details into DB
      *
