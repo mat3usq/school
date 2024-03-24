@@ -21,6 +21,7 @@ public class ProjectSecurityConfig {
                         .ignoringRequestMatchers(PathRequest.toH2Console()))
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/dashboard").authenticated()
+                        .requestMatchers("/displayMessages").hasRole("ADMIN")
                         .requestMatchers("/", "/home").permitAll()
                         .requestMatchers("/holidays/**").permitAll()
                         .requestMatchers("/contact").permitAll()

@@ -13,6 +13,7 @@ import org.springframework.web.context.annotation.RequestScope;
 import org.springframework.web.context.annotation.SessionScope;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /*
 @Slf4j, is a Lombok-provided annotation that will automatically generate an SLF4J
@@ -42,5 +43,9 @@ public class ContactService {
         if (result > 0)
             isSaved = true;
         return isSaved;
+    }
+
+    public List<Contact> findMsgsWithOpenStatus(){
+        return contactRepository.findMsgsWithStatus(SchoolConstants.OPEN);
     }
 }
