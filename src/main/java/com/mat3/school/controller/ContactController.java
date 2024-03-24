@@ -25,7 +25,6 @@ public class ContactController {
         this.contactService = contactService;
     }
 
-
     @RequestMapping("/contact")
     public String displayContactPage(Model model) {
         model.addAttribute("contact", new Contact());
@@ -51,8 +50,6 @@ public class ContactController {
             return "contact.html";
         }
 
-        contactService.setCounter(contactService.getCounter() + 1);
-        log.info("Number of times the Contact form is submitted : " + contactService.getCounter());
         contactService.saveMessageDetails(contact);
         return "redirect:/contact";
     }
