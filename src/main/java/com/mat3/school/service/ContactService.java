@@ -23,6 +23,7 @@ Logger static property in the class at compilation time.
 @Service
 public class ContactService {
     private final ContactRepository contactRepository;
+
     @Autowired
     public ContactService(ContactRepository contactRepository) {
         this.contactRepository = contactRepository;
@@ -45,7 +46,16 @@ public class ContactService {
         return isSaved;
     }
 
-    public List<Contact> findMsgsWithOpenStatus(){
+    public List<Contact> findMsgsWithOpenStatus() {
         return contactRepository.findMsgsWithStatus(SchoolConstants.OPEN);
+    }
+
+    public boolean updateMsgStatus(int contactId, String updatedBy) {
+        boolean isUpdated = false;
+        int result = contactRepository.updateMsgStatus(contactId, SchoolConstants.CLOSE, updatedBy);
+        if (result > 0) {
+            isUpdated = true;
+        }
+        return isUpdated;
     }
 }
