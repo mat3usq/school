@@ -29,21 +29,21 @@ public class ContactRepository {
     }
 
     public int saveContactMsg(Contact contact) {
-        return jdbcTemplate.update("INSERT INTO CONTACT_MSG (NAME,MOBILE_NUM,EMAIL,SUBJECT," +
-                        "MESSAGE,STATUS,CREATED_AT,CREATED_BY) VALUES (?,?,?,?,?,?,?,?)",
-                contact.getName(), contact.getMobileNum(),
+        String sql = "insert into contact_msg (name,mobile_num,email,subject,message,status," +
+                "created_at,created_by) values (?,?,?,?,?,?,?,?)";
+        return jdbcTemplate.update(sql, contact.getName(), contact.getMobileNum(),
                 contact.getEmail(), contact.getSubject(), contact.getMessage(),
                 contact.getStatus(), contact.getCreatedAt(), contact.getCreatedBy());
     }
 
     public List<Contact> findMsgsWithStatus(String status) {
-        String sql = "SELECT * FROM CONTACT_MSG WHERE STATUS = ?";
-        return jdbcTemplate.query(sql, preparedStatement -> preparedStatement
-                .setString(1, status), new ContactRowMapper());
+        String sql = "select * from contact_msg where status = ?";
+        return jdbcTemplate.query(sql, preparedStatement ->
+                preparedStatement.setString(1, status), new ContactRowMapper());
     }
 
     public int updateMsgStatus(int contactId, String status, String updatedBy) {
-        String sql = "UPDATE CONTACT_MSG SET STATUS = ?, UPDATED_BY = ?,UPDATED_AT =? WHERE CONTACT_ID = ?";
+        String sql = "update contact_msg set status = ?, updated_by = ?,updated_at =? where contact_id = ?";
         return jdbcTemplate.update(sql, preparedStatement -> {
             preparedStatement.setString(1, status);
             preparedStatement.setString(2, updatedBy);

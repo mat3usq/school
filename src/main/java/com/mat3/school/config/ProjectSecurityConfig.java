@@ -17,8 +17,7 @@ public class ProjectSecurityConfig {
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         // Permit All Requests inside the Web Application
         http.csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/saveMsg")
-                        .ignoringRequestMatchers(PathRequest.toH2Console()))
+                        .ignoringRequestMatchers("/saveMsg"))
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/dashboard").authenticated()
                         .requestMatchers("/displayMessages").hasRole("ADMIN")
@@ -31,8 +30,7 @@ public class ProjectSecurityConfig {
                         .requestMatchers("/about").permitAll()
                         .requestMatchers("/assets/**").permitAll()
                         .requestMatchers("/login").permitAll()
-                        .requestMatchers("/logout").permitAll()
-                        .requestMatchers(PathRequest.toH2Console()).permitAll())
+                        .requestMatchers("/logout").permitAll())
                 .formLogin(login -> login
                         .loginPage("/login")
                         .defaultSuccessUrl("/dashboard")
@@ -43,9 +41,6 @@ public class ProjectSecurityConfig {
                         .invalidateHttpSession(true)
                         .permitAll())
                 .httpBasic(Customizer.withDefaults());
-
-        http.headers(headersConfigurer -> headersConfigurer
-                .frameOptions(frameOptionsConfig -> frameOptionsConfig.disable()));
 
         return http.build();
     }
