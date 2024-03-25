@@ -1,19 +1,15 @@
 package com.mat3.school.service;
 
-import com.mat3.school.Repository.ContactRepository;
+import com.mat3.school.repository.ContactRepository;
 import com.mat3.school.constants.SchoolConstants;
 import com.mat3.school.model.Contact;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.annotation.ApplicationScope;
-import org.springframework.web.context.annotation.RequestScope;
-import org.springframework.web.context.annotation.SessionScope;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 /*
 @Slf4j, is a Lombok-provided annotation that will automatically generate an SLF4J
@@ -40,22 +36,28 @@ public class ContactService {
         contact.setStatus(SchoolConstants.OPEN);
         contact.setCreatedBy(SchoolConstants.ANONYMOUS);
         contact.setCreatedAt(LocalDateTime.now());
-        int result = contactRepository.saveContactMsg(contact);
-        if (result > 0)
+        Contact savedContact = contactRepository.save(contact);
+        if (null != savedContact && savedContact.getContactId() > 0)
             isSaved = true;
         return isSaved;
     }
 
     public List<Contact> findMsgsWithOpenStatus() {
-        return contactRepository.findMsgsWithStatus(SchoolConstants.OPEN);
+        return contactRepository.findByStatus(SchoolConstants.OPEN);
     }
 
     public boolean updateMsgStatus(int contactId, String updatedBy) {
         boolean isUpdated = false;
-        int result = contactRepository.updateMsgStatus(contactId, SchoolConstants.CLOSE, updatedBy);
-        if (result > 0) {
+        Optional<Contact> contact = contactRepository.findById(contactId);
+        contact.ifPresent(contact1 -> {
+            contact1.setStatus(SchoolConstants.CLOSE);
+            contact1.setUpdatedBy(updatedBy);
+            contact1.setUpdatedAt(LocalDateTime.now());
+        });
+        Contact updatedContact = contactRepository.save(contact.get());
+        if (null != updatedContact && updatedContact.getUpdatedBy() != null)
             isUpdated = true;
-        }
+
         return isUpdated;
     }
 }
