@@ -17,7 +17,7 @@ public class ProjectSecurityConfig {
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         // Permit All Requests inside the Web Application
         http.csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/saveMsg"))
+                        .ignoringRequestMatchers("/saveMsg", "/public/**"))
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/dashboard").authenticated()
                         .requestMatchers("/displayMessages").hasRole("ADMIN")
@@ -30,6 +30,7 @@ public class ProjectSecurityConfig {
                         .requestMatchers("/about").permitAll()
                         .requestMatchers("/assets/**").permitAll()
                         .requestMatchers("/login").permitAll()
+                        .requestMatchers("/public/**").permitAll()
                         .requestMatchers("/logout").permitAll())
                 .formLogin(login -> login
                         .loginPage("/login")
