@@ -15,5 +15,7 @@ public @interface PasswordValidator {
 
     Class<? extends Payload>[] payload() default {};
 
-    String message() default "Please choose a stronger password";
+    String message() default
+            "To ensure a password is strong, it must meet the following criteria: " +
+                    "Contain at least one uppercase letter, one lowercase letter, one digit, one special character.\n";
 }
