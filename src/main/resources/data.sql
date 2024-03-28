@@ -24,3 +24,9 @@ VALUES (' Nov 11 ','Veterans Day','FEDERAL',CURDATE(),'DBA');
 
 INSERT INTO `holidays` (`day`,`reason`,`type`,`created_at`, `created_by`)
 VALUES (' Mar 27 ','BirthDay','FEDERAL',CURDATE(),'DBA');
+
+INSERT INTO `roles` (`role_name`,`created_at`, `created_by`)
+VALUES ('ADMIN',CURDATE(),'DBA');
+
+INSERT INTO `roles` (`role_name`,`created_at`, `created_by`)
+VALUES ('STUDENT',CURDATE(),'DBA');
