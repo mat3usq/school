@@ -32,4 +32,4 @@ INSERT INTO `roles` (`role_name`, `created_at`, `created_by`)
 VALUES ('STUDENT', CURDATE(), 'DBA');
 
 INSERT INTO `person` (`name`, `email`, `mobile_number`, `pwd`, `role_id`, `created_at`, `created_by`)
-VALUES ('admin', 'admin', '77766655', 'admin', 1, CURDATE(), 'DBA');
+VALUES ('admin', 'admin', '77766655', '$2a$12$t823mpw6SD8Xn.f3MVeV/Of62q.1XSX6.VVcg.auhwUCbi6OxZAZe', 1, CURDATE(), 'DBA');
