@@ -2,7 +2,6 @@ package com.mat3.school.model;
 
 import com.mat3.school.annotations.FieldsValueMatch;
 import com.mat3.school.annotations.PasswordValidator;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
@@ -12,6 +11,9 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -72,4 +74,10 @@ public class Person extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "class_id", referencedColumnName = "classId")
     private SchoolClass schoolClass;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinTable(name = "person_courses",
+            joinColumns = {@JoinColumn(name = "person_id", referencedColumnName = "personId")},
+            inverseJoinColumns = {@JoinColumn(name = "course_id", referencedColumnName = "courseId")})
+    private Set<Courses> courses = new HashSet<>();
 }
