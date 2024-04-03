@@ -5345,7 +5345,6 @@ fieldset:disabled .btn {
     margin-bottom: 1rem;
     border: 1px solid transparent;
     border-radius: 0.25rem;
-    text-align: center;
 }
 
 .alert-heading {
@@ -21529,6 +21528,11 @@ label {
 
 .table-responsive-md {
     margin: 50px;
+}
+
+.table-responsive-class {
+    margin: auto;
+    width: 50% !important;
 }
 
 .control-label:after {
