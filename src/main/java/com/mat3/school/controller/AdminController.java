@@ -1,7 +1,9 @@
 package com.mat3.school.controller;
 
+import com.mat3.school.model.Courses;
 import com.mat3.school.model.Person;
 import com.mat3.school.model.SchoolClass;
+import com.mat3.school.repository.CoursesRepository;
 import com.mat3.school.repository.PersonRepository;
 import com.mat3.school.repository.SchoolClassRepository;
 import jakarta.servlet.http.HttpSession;
@@ -20,11 +22,13 @@ import java.util.Optional;
 public class AdminController {
     public final PersonRepository personRepository;
     public final SchoolClassRepository schoolClassRepository;
+    public final CoursesRepository coursesRepository;
 
     @Autowired
-    public AdminController(PersonRepository personRepository, SchoolClassRepository schoolClassRepository) {
+    public AdminController(PersonRepository personRepository, SchoolClassRepository schoolClassRepository, CoursesRepository coursesRepository) {
         this.personRepository = personRepository;
         this.schoolClassRepository = schoolClassRepository;
+        this.coursesRepository = coursesRepository;
     }
 
     @RequestMapping("/displayClasses")
@@ -93,6 +97,23 @@ public class AdminController {
         SchoolClass schoolClassSaved = schoolClassRepository.save(schoolClass);
         session.setAttribute("schoolClass", schoolClassSaved);
         ModelAndView modelAndView = new ModelAndView("redirect:/admin/displayStudents?classId=" + schoolClass.getClassId());
+        return modelAndView;
+    }
+
+    @GetMapping("/displayCourses")
+    public ModelAndView displayCourses() {
+        List<Courses> courses = coursesRepository.findAll();
+        ModelAndView modelAndView = new ModelAndView("courses_secure.html");
+        modelAndView.addObject("courses", courses);
+        modelAndView.addObject("course", new Courses());
+        return modelAndView;
+    }
+
+    @PostMapping("/addNewCourse")
+    public ModelAndView addNewCourse(@ModelAttribute("course") Courses course) {
+        ModelAndView modelAndView = new ModelAndView();
+        coursesRepository.save(course);
+        modelAndView.setViewName("redirect:/admin/displayCourses");
         return modelAndView;
     }
 }
