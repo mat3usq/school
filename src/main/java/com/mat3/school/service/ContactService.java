@@ -5,6 +5,10 @@ import com.mat3.school.constants.SchoolConstants;
 import com.mat3.school.model.Contact;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -39,16 +43,16 @@ public class ContactService {
         return isSaved;
     }
 
-    public List<Contact> findMsgsWithOpenStatus() {
-        return contactRepository.findByStatus(SchoolConstants.OPEN);
+    public Page<Contact> findMsgsWithOpenStatus(int pageNum, String sortField, String sortDir) {
+        Pageable pageable = PageRequest.of(pageNum - 1, 5,
+                sortDir.equals("asc") ? Sort.by(sortField).ascending() : Sort.by(sortField).descending());
+        return contactRepository.findByStatus(SchoolConstants.OPEN, pageable);
     }
 
     public boolean updateMsgStatus(int contactId) {
         boolean isUpdated = false;
         Optional<Contact> contact = contactRepository.findById(contactId);
-        contact.ifPresent(contact1 -> {
-            contact1.setStatus(SchoolConstants.CLOSE);
-        });
+        contact.ifPresent(c -> c.setStatus(SchoolConstants.CLOSE));
         Contact updatedContact = contactRepository.save(contact.get());
         if (null != updatedContact && updatedContact.getUpdatedBy() != null)
             isUpdated = true;
