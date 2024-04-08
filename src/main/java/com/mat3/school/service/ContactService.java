@@ -49,14 +49,12 @@ public class ContactService {
         return contactRepository.findByStatus(SchoolConstants.OPEN, pageable);
     }
 
-    public boolean updateMsgStatus(int contactId) {
+    public boolean updateMsgStatus(int contactId){
         boolean isUpdated = false;
-        Optional<Contact> contact = contactRepository.findById(contactId);
-        contact.ifPresent(c -> c.setStatus(SchoolConstants.CLOSE));
-        Contact updatedContact = contactRepository.save(contact.get());
-        if (null != updatedContact && updatedContact.getUpdatedBy() != null)
+        int rows = contactRepository.updateStatusById(SchoolConstants.CLOSE,contactId);
+        if(rows > 0) {
             isUpdated = true;
-
+        }
         return isUpdated;
     }
 }
