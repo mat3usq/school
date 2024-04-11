@@ -1,0 +1,12 @@
+2024-04-11 23:49:07,144 INFO o.h.v.i.u.Version [background-preinit] HV000001: Hibernate Validator 8.0.1.Final
+2024-04-11 23:49:07,181 INFO o.s.b.l.DeferredLog [restartedMain] Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-04-11 23:49:07,181 INFO o.s.b.l.DeferredLog [restartedMain] For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-04-11 23:49:07,447 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-04-11 23:49:07,470 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 19 ms. Found 7 JPA repository interfaces.
+2024-04-11 23:49:07,975 INFO o.s.b.w.e.t.TomcatWebServer [restartedMain] Tomcat initialized with port 8080 (http)
+2024-04-11 23:49:07,981 INFO o.a.j.l.DirectJDKLog [restartedMain] Initializing ProtocolHandler ["http-nio-8080"]
+2024-04-11 23:49:07,981 INFO o.a.j.l.DirectJDKLog [restartedMain] Starting service [Tomcat]
+2024-04-11 23:49:07,981 INFO o.a.j.l.DirectJDKLog [restartedMain] Starting Servlet engine: [Apache Tomcat/10.1.19]
+2024-04-11 23:49:07,998 INFO o.a.j.l.DirectJDKLog [restartedMain] Initializing Spring embedded WebApplicationContext
+2024-04-11 23:49:07,998 INFO o.s.b.w.s.c.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 817 ms
+2024-04-11 23:49:08,064 INFO c.z.h.HikariDataSource [restartedMain] HikariPool-1 - Starting...
