@@ -46,7 +46,7 @@ public class ContactService {
     public Page<Contact> findMsgsWithOpenStatus(int pageNum, String sortField, String sortDir) {
         Pageable pageable = PageRequest.of(pageNum - 1, 5,
                 sortDir.equals("asc") ? Sort.by(sortField).ascending() : Sort.by(sortField).descending());
-        return contactRepository.findByStatus(SchoolConstants.OPEN, pageable);
+        return contactRepository.findByStatusWithQuery(SchoolConstants.OPEN, pageable);
     }
 
     public boolean updateMsgStatus(int contactId){
