@@ -56,7 +56,7 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form th:action="@{/admin/addNewCourse}" method="post" class="signin-form" th:object="${course}">
+                    <form th:action="@{/teacher/addNewCourse}" method="post" class="signin-form" th:object="${course}">
                         <div class="modal-body">
                             <div class="input-grids">
                                 <label class="control-label" for="courseName">Course Name</label>
@@ -84,7 +84,7 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form th:action="@{/admin/toEditCourse}" method="post" class="signin-form"
+                    <form th:action="@{/teacher/toEditCourse}" method="post" class="signin-form"
                           th:object="${toEditCourse}" id="editCourseForm">
                         <div class="modal-body">
                             <div class="input-grids">
@@ -123,10 +123,10 @@
                 <td th:text="${course.courseId}"></td>
                 <td th:text="${course.name}"></td>
                 <td th:text="${course.fees}"></td>
-                <td><a th:href="@{/admin/editCourse(classId=${course.courseId})}" class="btn btn-success edit-course-btn" th:data-course-id="${course.courseId}" th:data-course-name="${course.name}" th:data-course-fees="${course.fees}"
+                <td><a th:href="@{/teacher/editCourse(classId=${course.courseId})}" class="btn btn-success edit-course-btn" th:data-course-id="${course.courseId}" th:data-course-name="${course.name}" th:data-course-fees="${course.fees}"
                        data-bs-toggle="modal" data-bs-target="#editCourse">EDIT</a></td>
-                <td><a th:href="@{/admin/viewStudents(id=${course.courseId})}" class="btn btn-info">VIEW</a></td>
-                <td><a th:href="@{/admin/deleteCourse(id=${course.courseId})}" class="btn btn-warning">DELETE</a></td>
+                <td><a th:href="@{/teacher/viewStudents(id=${course.courseId})}" class="btn btn-info">VIEW</a></td>
+                <td><a th:href="@{/teacher/deleteCourse(id=${course.courseId})}" class="btn btn-warning">DELETE</a></td>
             </tr>
             </tbody>
         </table>
@@ -175,7 +175,7 @@
                 const courseFees = this.getAttribute('data-course-fees');
 
                 const form = document.getElementById('editCourseForm');
-                form.action = '/admin/editCourse?courseId=' + courseId;
+                form.action = '/teacher/editCourse?courseId=' + courseId;
 
                 const courseNameInput = document.getElementById('editCourseName');
                 courseNameInput.value = courseName;
