@@ -74,12 +74,47 @@
                 </div>
             </div>
         </div>
+        <div class="modal fade login-block" id="editCourse" tabindex="-1" role="dialog"
+             aria-labelledby="editCourseModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header border-bottom-0">
+                        <h5 class="modal-title" id="editCourseLabel">Edit Course</h5>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form th:action="@{/admin/toEditCourse}" method="post" class="signin-form"
+                          th:object="${toEditCourse}" id="editCourseForm">
+                        <div class="modal-body">
+                            <div class="input-grids">
+                                <label class="control-label" for="editCourseName">Course Name</label>
+                                <input type="text" class="form-control" name="courseName" id="editCourseName"
+                                       th:field="*{name}"
+                                       required placeholder="Enter course name">
+                            </div>
+                            <div class="input-grids">
+                                <label class="control-label" for="editCourseFees">Course Fees</label>
+                                <input type="text" class="form-control" name="courseFees" id="editCourseFees"
+                                       th:field="*{fees}"
+                                       required placeholder="Enter fees name">
+                            </div>
+                        </div>
+                        <div class="modal-footer border-top-0 d-flex justify-content-center">
+                            <button type="submit" class="btn btn-style btn-style-3">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
         <table class="table table-striped table-hover">
             <thead class="table-dark">
             <tr>
                 <th scope="col">Course ID</th>
                 <th scope="col">Course Name</th>
                 <th scope="col">Fees</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
                 <th scope="col"></th>
             </tr>
             </thead>
@@ -88,8 +123,10 @@
                 <td th:text="${course.courseId}"></td>
                 <td th:text="${course.name}"></td>
                 <td th:text="${course.fees}"></td>
-                <td><a th:href="@{/admin/viewStudents(id=${course.courseId})}" class="btn btn-warning">VIEW STUDENTS</a>
-                </td>
+                <td><a th:href="@{/admin/editCourse(classId=${course.courseId})}" class="btn btn-success edit-course-btn" th:data-course-id="${course.courseId}" th:data-course-name="${course.name}" th:data-course-fees="${course.fees}"
+                       data-bs-toggle="modal" data-bs-target="#editCourse">EDIT</a></td>
+                <td><a th:href="@{/admin/viewStudents(id=${course.courseId})}" class="btn btn-info">VIEW</a></td>
+                <td><a th:href="@{/admin/deleteCourse(id=${course.courseId})}" class="btn btn-warning">DELETE</a></td>
             </tr>
             </tbody>
         </table>
@@ -129,6 +166,25 @@
         document.body.scrollTop = 0;
         document.documentElement.scrollTop = 0;
     }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.edit-course-btn').forEach(function (button) {
+            button.addEventListener('click', function () {
+                const courseId = this.getAttribute('data-course-id');
+                const courseName = this.getAttribute('data-course-name');
+                const courseFees = this.getAttribute('data-course-fees');
+
+                const form = document.getElementById('editCourseForm');
+                form.action = '/admin/editCourse?courseId=' + courseId;
+
+                const courseNameInput = document.getElementById('editCourseName');
+                courseNameInput.value = courseName;
+
+                const courseFeesInput = document.getElementById('editCourseFees');
+                courseFeesInput.value = courseFees;
+            });
+        });
+    });
 </script>
 <!-- //move top -->
 

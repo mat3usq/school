@@ -7,6 +7,7 @@ import com.mat3.school.repository.CoursesRepository;
 import com.mat3.school.repository.PersonRepository;
 import com.mat3.school.repository.SchoolClassRepository;
 import jakarta.servlet.http.HttpSession;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -43,14 +44,14 @@ public class AdminController {
     }
 
     @PostMapping("/addNewClass")
-    public ModelAndView addNewClass(@ModelAttribute("toEditSchoolClass") SchoolClass schoolClass) {
+    public ModelAndView addNewClass(@ModelAttribute("schoolClass") SchoolClass schoolClass) {
         schoolClassRepository.save(schoolClass);
         ModelAndView modelAndView = new ModelAndView("redirect:/admin/displayClasses");
         return modelAndView;
     }
 
     @PostMapping("/editClass")
-    public ModelAndView editClass(@RequestParam int classId, @ModelAttribute("schoolClass") SchoolClass schoolClass) {
+    public ModelAndView editClass(@RequestParam int classId, @ModelAttribute("toEditSchoolClass") SchoolClass schoolClass) {
         SchoolClass oldSchoolClass = schoolClassRepository.findById(classId).orElse(new SchoolClass());
         oldSchoolClass.setName(schoolClass.getName());
         schoolClassRepository.save(oldSchoolClass);
@@ -116,9 +117,10 @@ public class AdminController {
 //        List<Courses> courses = coursesRepository.findByOrderByName();
         List<Courses> courses = coursesRepository.findAll(Sort.by("name").ascending());
 
-        ModelAndView modelAndView = new ModelAndView("courses_secure.html");
+        ModelAndView modelAndView = new ModelAndView("courses_secure");
         modelAndView.addObject("courses", courses);
         modelAndView.addObject("course", new Courses());
+        modelAndView.addObject("toEditCourse", new Courses());
         return modelAndView;
     }
 
@@ -126,6 +128,29 @@ public class AdminController {
     public ModelAndView addNewCourse(@ModelAttribute("course") Courses course) {
         ModelAndView modelAndView = new ModelAndView();
         coursesRepository.save(course);
+        modelAndView.setViewName("redirect:/admin/displayCourses");
+        return modelAndView;
+    }
+
+    @PostMapping("/editCourse")
+    public ModelAndView editCourse(@RequestParam int courseId, @ModelAttribute("toEditCourse") Courses courses) {
+        Courses oldCourses = coursesRepository.findById(courseId).orElse(new Courses());
+        oldCourses.setName(courses.getName());
+        oldCourses.setFees(courses.getFees());
+        coursesRepository.save(oldCourses);
+        ModelAndView modelAndView = new ModelAndView("redirect:/admin/displayCourses");
+        return modelAndView;
+    }
+
+    @GetMapping("/deleteCourse")
+    public ModelAndView deleteCourse(@RequestParam int id) {
+        ModelAndView modelAndView = new ModelAndView();
+        Optional<Courses> courses = coursesRepository.findById(id);
+        for (Person person : courses.get().getPersons()) {
+            person.setCourses(null);
+            personRepository.save(person);
+        }
+        coursesRepository.deleteById(id);
         modelAndView.setViewName("redirect:/admin/displayCourses");
         return modelAndView;
     }
