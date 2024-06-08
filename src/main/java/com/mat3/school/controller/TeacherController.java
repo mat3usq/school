@@ -1,5 +1,6 @@
 package com.mat3.school.controller;
 
+import com.mat3.school.constants.SchoolConstants;
 import com.mat3.school.model.Courses;
 import com.mat3.school.model.Person;
 import com.mat3.school.repository.CoursesRepository;
@@ -74,14 +75,14 @@ public class TeacherController {
     }
 
     @GetMapping("/viewStudents")
-    public ModelAndView viewStudents(@RequestParam int id, HttpSession session, @RequestParam(required = false) String error) {
+    public ModelAndView viewStudents(@RequestParam int id, HttpSession session, @RequestParam(value = "emailError", required = false) String error) {
         ModelAndView modelAndView = new ModelAndView("course_students.html");
         Optional<Courses> courses = coursesRepository.findById(id);
         modelAndView.addObject("courses", courses.get());
         modelAndView.addObject("person", new Person());
         session.setAttribute("courses", courses.get());
         if (error != null)
-            modelAndView.addObject("errorMessage", "Invalid Email entered!");
+            modelAndView.addObject("errorMessage", "Invalid Student Email entered!");
         return modelAndView;
     }
 
@@ -90,8 +91,8 @@ public class TeacherController {
         ModelAndView modelAndView = new ModelAndView();
         Courses courses = (Courses) session.getAttribute("courses");
         Person personEntity = personRepository.readByEmail(person.getEmail());
-        if (personEntity == null || !(personEntity.getPersonId() > 0)) {
-            modelAndView.setViewName("redirect:/teacher/viewStudents?id=" + courses.getCourseId() + "&error=true");
+        if (personEntity == null || !(personEntity.getPersonId() > 0) || !personEntity.getRoles().getRoleName().equals(SchoolConstants.STUDENT_ROLE)) {
+            modelAndView.setViewName("redirect:/teacher/viewStudents?id=" + courses.getCourseId() + "&emailError=true");
             return modelAndView;
         }
         personEntity.getCourses().add(courses);

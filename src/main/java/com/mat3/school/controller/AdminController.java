@@ -1,5 +1,6 @@
 package com.mat3.school.controller;
 
+import com.mat3.school.constants.SchoolConstants;
 import com.mat3.school.model.Courses;
 import com.mat3.school.model.Person;
 import com.mat3.school.model.SchoolClass;
@@ -72,14 +73,14 @@ public class AdminController {
     }
 
     @GetMapping("/displayStudents")
-    public ModelAndView displayStudents(@RequestParam int classId, HttpSession session, @RequestParam(value = "error", required = false) String error) {
+    public ModelAndView displayStudents(@RequestParam int classId, HttpSession session, @RequestParam(value = "emailError", required = false) String error) {
         ModelAndView modelAndView = new ModelAndView("students.html");
         Optional<SchoolClass> schoolClass = schoolClassRepository.findById(classId);
         modelAndView.addObject("schoolClass", schoolClass.get());
         modelAndView.addObject("person", new Person());
         session.setAttribute("schoolClass", schoolClass.get());
         if (error != null)
-            modelAndView.addObject("errorMessage", "Invalid Email entered!");
+            modelAndView.addObject("errorMessage", "Invalid Student Email entered!");
         return modelAndView;
     }
 
@@ -88,8 +89,8 @@ public class AdminController {
         ModelAndView modelAndView = new ModelAndView();
         SchoolClass schoolClass = (SchoolClass) session.getAttribute("schoolClass");
         Person personEntity = personRepository.readByEmail(person.getEmail());
-        if (personEntity == null || !(personEntity.getPersonId() > 0)) {
-            modelAndView.setViewName("redirect:/admin/displayStudents?classId=" + schoolClass.getClassId() + "&error=true");
+        if (personEntity == null || !(personEntity.getPersonId() > 0) || !personEntity.getRoles().getRoleName().equals(SchoolConstants.STUDENT_ROLE)) {
+            modelAndView.setViewName("redirect:/admin/displayStudents?classId=" + schoolClass.getClassId() + "&emailError=true");
             return modelAndView;
         }
         personEntity.setSchoolClass(schoolClass);
