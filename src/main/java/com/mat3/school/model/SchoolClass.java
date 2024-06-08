@@ -3,7 +3,6 @@ package com.mat3.school.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,8 +25,11 @@ public class SchoolClass extends BaseEntity {
     @Size(min = 3, message = "Name must be at least 3 characters long")
     private String name;
 
-    @OneToMany(mappedBy = "schoolClass", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, targetEntity = Person.class)
-    private Set<Person> persons;
+    @OneToMany(mappedBy = "studentClasses", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, targetEntity = Person.class)
+    private Set<Person> students;
+
+    @ManyToMany(mappedBy = "teacherClasses", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private Set<Person> teachers;
 
     public SchoolClass(String name) {
         this.name = name;

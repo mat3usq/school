@@ -1,23 +1,22 @@
 package com.mat3.school.controller;
 
 import com.mat3.school.constants.SchoolConstants;
-import com.mat3.school.model.Courses;
 import com.mat3.school.model.Person;
 import com.mat3.school.model.SchoolClass;
 import com.mat3.school.repository.CoursesRepository;
 import com.mat3.school.repository.PersonRepository;
 import com.mat3.school.repository.SchoolClassRepository;
 import jakarta.servlet.http.HttpSession;
-import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Slf4j
 @Controller
@@ -63,8 +62,8 @@ public class AdminController {
     @RequestMapping("/deleteClass")
     public ModelAndView deleteClass(@RequestParam int id) {
         Optional<SchoolClass> schoolClass = schoolClassRepository.findById(id);
-        for (Person person : schoolClass.get().getPersons()) {
-            person.setSchoolClass(null);
+        for (Person person : schoolClass.get().getStudents()) {
+            person.setStudentClasses(null);
             personRepository.save(person);
         }
         schoolClassRepository.deleteById(id);
@@ -73,14 +72,16 @@ public class AdminController {
     }
 
     @GetMapping("/displayStudents")
-    public ModelAndView displayStudents(@RequestParam int classId, HttpSession session, @RequestParam(value = "emailError", required = false) String error) {
-        ModelAndView modelAndView = new ModelAndView("students.html");
+    public ModelAndView displayStudents(@RequestParam int classId, HttpSession session, @RequestParam(value = "studentEmailError", required = false) String studentEmailError, @RequestParam(value = "teacherEmailError", required = false) String teacherEmailError) {
+        ModelAndView modelAndView = new ModelAndView("students");
         Optional<SchoolClass> schoolClass = schoolClassRepository.findById(classId);
         modelAndView.addObject("schoolClass", schoolClass.get());
         modelAndView.addObject("person", new Person());
         session.setAttribute("schoolClass", schoolClass.get());
-        if (error != null)
+        if (studentEmailError != null)
             modelAndView.addObject("errorMessage", "Invalid Student Email entered!");
+        if(teacherEmailError != null)
+            modelAndView.addObject("errorMessage", "Invalid Teacher Email entered!");
         return modelAndView;
     }
 
@@ -90,12 +91,29 @@ public class AdminController {
         SchoolClass schoolClass = (SchoolClass) session.getAttribute("schoolClass");
         Person personEntity = personRepository.readByEmail(person.getEmail());
         if (personEntity == null || !(personEntity.getPersonId() > 0) || !personEntity.getRoles().getRoleName().equals(SchoolConstants.STUDENT_ROLE)) {
-            modelAndView.setViewName("redirect:/admin/displayStudents?classId=" + schoolClass.getClassId() + "&emailError=true");
+            modelAndView.setViewName("redirect:/admin/displayStudents?classId=" + schoolClass.getClassId() + "&studentEmailError=true");
             return modelAndView;
         }
-        personEntity.setSchoolClass(schoolClass);
+        personEntity.setStudentClasses(schoolClass);
         personRepository.save(personEntity);
-        schoolClass.getPersons().add(personEntity);
+        schoolClass.getStudents().add(personEntity);
+        schoolClassRepository.save(schoolClass);
+        modelAndView.setViewName("redirect:/admin/displayStudents?classId=" + schoolClass.getClassId());
+        return modelAndView;
+    }
+
+    @PostMapping("/assignTeacher")
+    public ModelAndView assignTeacher(@ModelAttribute("person") Person person, HttpSession session) {
+        ModelAndView modelAndView = new ModelAndView();
+        SchoolClass schoolClass = (SchoolClass) session.getAttribute("schoolClass");
+        Person personEntity = personRepository.readByEmail(person.getEmail());
+        if (personEntity == null || !(personEntity.getPersonId() > 0) || !personEntity.getRoles().getRoleName().equals(SchoolConstants.TEACHER_ROLE)) {
+            modelAndView.setViewName("redirect:/admin/displayStudents?classId=" + schoolClass.getClassId() + "&teacherEmailError=true");
+            return modelAndView;
+        }
+        personEntity.getTeacherClasses().add(schoolClass);
+        personRepository.save(personEntity);
+        schoolClass.getTeachers().add(personEntity);
         schoolClassRepository.save(schoolClass);
         modelAndView.setViewName("redirect:/admin/displayStudents?classId=" + schoolClass.getClassId());
         return modelAndView;
@@ -105,8 +123,8 @@ public class AdminController {
     public ModelAndView deleteStudent(@RequestParam int personId, HttpSession session) {
         SchoolClass schoolClass = (SchoolClass) session.getAttribute("schoolClass");
         Optional<Person> person = personRepository.findById(personId);
-        person.get().setSchoolClass(null);
-        schoolClass.getPersons().remove(person.get());
+        person.get().setStudentClasses(null);
+        schoolClass.getStudents().remove(person.get());
         SchoolClass schoolClassSaved = schoolClassRepository.save(schoolClass);
         session.setAttribute("schoolClass", schoolClassSaved);
         ModelAndView modelAndView = new ModelAndView("redirect:/admin/displayStudents?classId=" + schoolClass.getClassId());
