@@ -2,8 +2,11 @@ package com.mat3.school.controller;
 
 import com.mat3.school.constants.SchoolConstants;
 import com.mat3.school.model.Courses;
+import com.mat3.school.model.Mark;
 import com.mat3.school.model.Person;
+import com.mat3.school.model.SchoolClass;
 import com.mat3.school.repository.CoursesRepository;
+import com.mat3.school.repository.MarkRepository;
 import com.mat3.school.repository.PersonRepository;
 import com.mat3.school.repository.SchoolClassRepository;
 import jakarta.servlet.http.HttpSession;
@@ -24,13 +27,16 @@ public class TeacherController {
     public final PersonRepository personRepository;
     public final SchoolClassRepository schoolClassRepository;
     public final CoursesRepository coursesRepository;
+    public final MarkRepository markRepository;
 
     @Autowired
-    public TeacherController(PersonRepository personRepository, SchoolClassRepository schoolClassRepository, CoursesRepository coursesRepository) {
+    public TeacherController(PersonRepository personRepository, SchoolClassRepository schoolClassRepository, CoursesRepository coursesRepository, MarkRepository markRepository) {
         this.personRepository = personRepository;
         this.schoolClassRepository = schoolClassRepository;
         this.coursesRepository = coursesRepository;
+        this.markRepository = markRepository;
     }
+
     @GetMapping("/displayCourses")
     public ModelAndView displayCourses() {
 //        List<Courses> courses = coursesRepository.findByOrderByName();
@@ -112,6 +118,32 @@ public class TeacherController {
         personRepository.save(person.get());
         session.setAttribute("courses", courses);
         ModelAndView modelAndView = new ModelAndView("redirect:/teacher/viewStudents?id=" + courses.getCourseId());
+        return modelAndView;
+    }
+
+    @GetMapping("/displayMarks")
+    public ModelAndView displayClasses(HttpSession session) {
+        List<SchoolClass> schoolClasses;
+        if (((Person) session.getAttribute("loggedInPerson")).getRoles().getRoleName().equals(SchoolConstants.ADMIN_ROLE))
+            schoolClasses = schoolClassRepository.findAll();
+        else
+            schoolClasses = schoolClassRepository.findAllByTeacherId(((Person) session.getAttribute("loggedInPerson")).getPersonId());
+        List<Mark> marks = markRepository.findAll();
+        ModelAndView modelAndView = new ModelAndView("classesWithMarks");
+        modelAndView.addObject("schoolClasses", schoolClasses);
+        modelAndView.addObject("marks", marks);
+        modelAndView.addObject("newMark", new Mark());
+        modelAndView.addObject("toEditMark", new Mark());
+        return modelAndView;
+    }
+
+    @PostMapping("/addMark/{studentId}")
+    public ModelAndView addMarkToStudent(@PathVariable("studentId") int studentId, @ModelAttribute("newMark") Mark mark) {
+        if (personRepository.findById(studentId).isPresent())
+            mark.setStudent(personRepository.findById(studentId).get());
+        markRepository.save(mark);
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("redirect:/teacher/displayMarks");
         return modelAndView;
     }
 }

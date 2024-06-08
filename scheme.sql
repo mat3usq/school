@@ -49,6 +49,9 @@ VALUES ('student', 'student', '111222333', '$2a$12$7J4G7W4ppyLy0p3jDmAAnetLHvykP
 INSERT INTO `person` (`name`, `email`, `mobile_number`, `pwd`, `role_id`, `created_at`, `created_by`)
 VALUES ('student2', 'student@gmail.com', '111222333', '$2a$12$7J4G7W4ppyLy0p3jDmAAnetLHvykPdsKl4dFxWtMAXMxMMNc02LAG', 3, CURDATE(), 'DBA');
 
+INSERT INTO `person` (`name`, `email`, `mobile_number`, `pwd`, `role_id`, `created_at`, `created_by`)
+VALUES ('student3', 'student2@gmail.com', '111222333', '$2a$12$7J4G7W4ppyLy0p3jDmAAnetLHvykPdsKl4dFxWtMAXMxMMNc02LAG', 3, CURDATE(), 'DBA');
+
 INSERT INTO `contact_msg` (`name`,`mobile_num`,`email`,`subject`,`message`,`status`,`created_at`, `created_by`)
 VALUES ('Adam','2176436587','zadam@gmail.com','Regarding a job','Wanted to join as teacher','Open',CURDATE(),'DBA');
 

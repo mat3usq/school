@@ -52,7 +52,7 @@
             <div class="row m-t-25">
                 <div class="col-sm-6 col-lg-3">
                     <a th:href="@{/displayProfile}">
-                        <div class="overview-item overview-item--c4">
+                        <div class="overview-item overview-item--c1">
                             <div class="overview__inner">
                                 <div class="overview-box clearfix">
                                     <div class="icon">
@@ -68,7 +68,7 @@
                 </div>
                 <div class="col-sm-6 col-lg-3" sec:authorize="hasRole('ROLE_ADMIN')">
                     <a th:href="@{/displayMessages/page/1?sortField=name&sortDir=asc}">
-                        <div class="overview-item overview-item--c3">
+                        <div class="overview-item overview-item--c2">
                             <div class="overview__inner">
                                 <div class="overview-box clearfix">
                                     <div class="icon">
@@ -84,11 +84,11 @@
                 </div>
                 <div class="col-sm-6 col-lg-3" sec:authorize="hasRole('ROLE_ADMIN')">
                     <a th:href="@{/admin/displayClasses}">
-                        <div class="overview-item overview-item--c1">
+                        <div class="overview-item overview-item--c3">
                             <div class="overview__inner">
                                 <div class="overview-box clearfix">
                                     <div class="icon">
-                                        <i class="fas fa-envelope-open-text"></i>
+                                        <i class="fas fa-chalkboard-teacher"></i>
                                     </div>
                                     <div class="text">
                                         <h2>Classes</h2>
@@ -100,11 +100,11 @@
                 </div>
                 <div class="col-sm-6 col-lg-3" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_TEACHER')">
                     <a th:href="@{/teacher/displayCourses}">
-                        <div class="overview-item overview-item--c2">
+                        <div class="overview-item overview-item--c4">
                             <div class="overview__inner">
                                 <div class="overview-box clearfix">
                                     <div class="icon">
-                                        <i class="fas fa-envelope-open-text"></i>
+                                        <i class="fas fa-graduation-cap"></i>
                                     </div>
                                     <div class="text">
                                         <h2>Courses</h2>
@@ -116,14 +116,46 @@
                 </div>
                 <div class="col-sm-6 col-lg-3" sec:authorize="hasRole('ROLE_STUDENT')">
                     <a th:href="@{/student/displayCourses}">
-                        <div class="overview-item overview-item--c3">
+                        <div class="overview-item overview-item--c5">
                             <div class="overview__inner">
                                 <div class="overview-box clearfix">
                                     <div class="icon">
-                                        <i class="fas fa-envelope-open-text"></i>
+                                        <i class="fas fa-graduation-cap"></i>
                                     </div>
                                     <div class="text">
                                         <h2>Courses</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-sm-6 col-lg-3" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_TEACHER')">
+                    <a th:href="@{/teacher/displayMarks}">
+                        <div class="overview-item overview-item--c6">
+                            <div class="overview__inner">
+                                <div class="overview-box clearfix">
+                                    <div class="icon">
+                                        <i class="fas fa-chart-bar"></i>
+                                    </div>
+                                    <div class="text">
+                                        <h2>Marks</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-sm-6 col-lg-3" sec:authorize="hasRole('ROLE_STUDENT')">
+                    <a th:href="@{/student/displayMarks}">
+                        <div class="overview-item overview-item--c6">
+                            <div class="overview__inner">
+                                <div class="overview-box clearfix">
+                                    <div class="icon">
+                                        <i class="fas fa-chart-bar"></i>
+                                    </div>
+                                    <div class="text">
+                                        <h2>Marks</h2>
                                     </div>
                                 </div>
                             </div>
