@@ -123,10 +123,28 @@ public class AdminController {
     public ModelAndView deleteStudent(@RequestParam int personId, HttpSession session) {
         SchoolClass schoolClass = (SchoolClass) session.getAttribute("schoolClass");
         Optional<Person> person = personRepository.findById(personId);
-        person.get().setStudentClasses(null);
-        schoolClass.getStudents().remove(person.get());
-        SchoolClass schoolClassSaved = schoolClassRepository.save(schoolClass);
-        session.setAttribute("schoolClass", schoolClassSaved);
+        if (person.isPresent()) {
+            person.get().setStudentClasses(null);
+            schoolClass.getStudents().remove(person.get());
+            SchoolClass schoolClassSaved = schoolClassRepository.save(schoolClass);
+            session.setAttribute("schoolClass", schoolClassSaved);
+        }
+        ModelAndView modelAndView = new ModelAndView("redirect:/admin/displayStudents?classId=" + schoolClass.getClassId());
+        return modelAndView;
+    }
+
+    @GetMapping("/deleteTeacher")
+    public ModelAndView deleteTeacher(@RequestParam int personId, HttpSession session) {
+        SchoolClass schoolClass = (SchoolClass) session.getAttribute("schoolClass");
+        Optional<Person> person = personRepository.findById(personId);
+
+        if(person.isPresent()) {
+            person.get().getTeacherClasses().remove(schoolClass);
+            schoolClass.getTeachers().remove(person.get());
+            SchoolClass schoolClassSaved = schoolClassRepository.save(schoolClass);
+            session.setAttribute("schoolClass", schoolClassSaved);
+        }
+
         ModelAndView modelAndView = new ModelAndView("redirect:/admin/displayStudents?classId=" + schoolClass.getClassId());
         return modelAndView;
     }

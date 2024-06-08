@@ -137,11 +137,33 @@ public class TeacherController {
         return modelAndView;
     }
 
-    @PostMapping("/addMark/{studentId}")
-    public ModelAndView addMarkToStudent(@PathVariable("studentId") int studentId, @ModelAttribute("newMark") Mark mark) {
+    @PostMapping("/addMark")
+    public ModelAndView addMarkToStudent(@RequestParam("studentId") int studentId, @ModelAttribute("newMark") Mark mark) {
         if (personRepository.findById(studentId).isPresent())
             mark.setStudent(personRepository.findById(studentId).get());
         markRepository.save(mark);
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("redirect:/teacher/displayMarks");
+        return modelAndView;
+    }
+
+    @PostMapping("/editMark")
+    public ModelAndView editStudentMark(@RequestParam("markId") int markId, @ModelAttribute("toEditMark") Mark mark) {
+        if (markRepository.findById(markId).isPresent()) {
+            Mark editedMark = markRepository.findById(markId).get();
+            editedMark.setMark(mark.getMark());
+            editedMark.setDescription(mark.getDescription());
+            markRepository.save(editedMark);
+        }
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("redirect:/teacher/displayMarks");
+        return modelAndView;
+    }
+
+    @GetMapping("/deleteMark")
+    public ModelAndView deleteMark(@RequestParam int markId) {
+        markRepository.deleteById(markId);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/teacher/displayMarks");
         return modelAndView;

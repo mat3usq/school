@@ -23,6 +23,7 @@
         font-size: 1em;
         text-align: center;
         min-width: 30px;
+        cursor: pointer;
     }
 
     .grade-1 {
@@ -157,33 +158,38 @@
                 </div>
             </div>
         </div>
-        <!--                <div class="modal fade login-block" id="editClass" tabindex="-1" role="dialog"-->
-        <!--             aria-labelledby="editClassModalLabel" aria-hidden="true">-->
-        <!--            <div class="modal-dialog modal-dialog-centered" role="document">-->
-        <!--                <div class="modal-content">-->
-        <!--                    <div class="modal-header border-bottom-0">-->
-        <!--                        <h5 class="modal-title" id="editClassLabel">Edit Class</h5>-->
-        <!--                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">-->
-        <!--                            <span aria-hidden="true">&times;</span>-->
-        <!--                        </button>-->
-        <!--                    </div>-->
-        <!--                    <form th:action="@{/admin/editClass}" method="post" class="signin-form"-->
-        <!--                          th:object="${toEditSchoolClass}" id="editClassForm">-->
-        <!--                        <div class="modal-body">-->
-        <!--                            <div class="input-grids">-->
-        <!--                                <label class="control-label" for="className">Class Name</label>-->
-        <!--                                <input type="text" class="form-control" name="className" id="editClassName"-->
-        <!--                                       th:field="*{name}"-->
-        <!--                                       required placeholder="Enter class name">-->
-        <!--                            </div>-->
-        <!--                        </div>-->
-        <!--                        <div class="modal-footer border-top-0 d-flex justify-content-center">-->
-        <!--                            <button type="submit" class="btn btn-style btn-style-3">Submit</button>-->
-        <!--                        </div>-->
-        <!--                    </form>-->
-        <!--                </div>-->
-        <!--            </div>-->
-        <!--        </div>-->
+        <div class="modal fade login-block" id="editMark" tabindex="-1" role="dialog"
+             aria-labelledby="editMarkModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header border-bottom-0">
+                        <h5 class="modal-title" id="editMarkLabel">Edit Mark</h5>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form th:action="@{/admin/editMark}" method="post" class="signin-form"
+                          th:object="${toEditMark}" id="editMarkForm">
+                        <div class="modal-body">
+                            <div class="input-grids">
+                                <label class="control-label" for="editMarkLevel">Mark Level</label>
+                                <input type="text" class="form-control" name="editMarkLevel" id="editMarkLevel"
+                                       th:field="*{mark}" required placeholder="Enter mark level">
+                                <label class="control-label" for="editMarkDescription">Mark Description</label>
+                                <input type="text" class="form-control" name="editMarkDescription"
+                                       id="editMarkDescription"
+                                       th:field="*{description}" required placeholder="Enter mark description">
+                            </div>
+                        </div>
+                    </form>
+                    <div class="modal-footer border-top-0 d-flex justify-content-center">
+                        <a class="btn btn-style btn-style-4" id="submitDeleteMark"
+                           th:href="@{/teacher/deleteMark}">Delete Mark</a>
+                        <button id="submitEditMark" class="btn btn-style btn-style-3">Update Mark</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <table th:each="schoolClass: ${schoolClasses}" class="table table-striped table-hover">
             <thead class="table-dark">
             <tr>
@@ -201,30 +207,35 @@
                 <td th:text="${student.name}"></td>
                 <td>
                     <th:block th:each="mark : ${marks}">
-    <span th:if="${mark.student.personId == student.personId}">
-        <span th:if="${mark.mark.equals('+')}" class="grade-tile grade-plus" th:text="${mark.mark}"></span>
-        <span th:if="${mark.mark.equals('-')}" class="grade-tile grade-minus" th:text="${mark.mark}"></span>
-        <span th:if="${!mark.mark.equals('+') and !mark.mark.equals('-') and !mark.mark.equals('0')}">
-            <span th:if="${mark.mark.contains('-')}"
-                  th:classappend="'grade-tile grade-' + ${mark.mark.substring(0, 1)} + '-minus'"
-                  th:text="${mark.mark}">
-            </span>
-            <span th:if="${mark.mark.contains('+')}"
-                  th:classappend="'grade-tile grade-' + ${mark.mark.substring(0, 1)} + '-plus'"
-                  th:text="${mark.mark}">
-            </span>
-            <span th:if="${!mark.mark.contains('-') and !mark.mark.contains('+')}"
-                  th:classappend="'grade-tile grade-' + ${mark.mark}"
-                  th:text="${mark.mark}">
-            </span>
-        </span>
-    </span>
+                    <span th:if="${mark.student.personId == student.personId}">
+                        <span th:if="${mark.mark.equals('+')}" class="grade-tile grade-plus"
+                              th:text="${mark.mark}"></span>
+                        <span th:if="${mark.mark.equals('-')}" class="grade-tile grade-minus"
+                              th:text="${mark.mark}"></span>
+                        <th:block
+                                th:if="${!mark.mark.equals('+') and !mark.mark.equals('-') and !mark.mark.equals('0')}">
+                            <span th:if="${mark.mark.contains('-')}"
+                                  th:classappend="'grade-tile grade-' + ${mark.mark.substring(0, 1)} + '-minus'"
+                                  th:text="${mark.mark}">
+                            </span>
+                            <span th:if="${mark.mark.contains('+')}"
+                                  th:classappend="'grade-tile grade-' + ${mark.mark.substring(0, 1)} + '-plus'"
+                                  th:text="${mark.mark}">
+                            </span>
+                            <span th:if="${!mark.mark.contains('-') and !mark.mark.contains('+')}"
+                                  th:classappend="'grade-tile grade-' + ${mark.mark}"
+                                  th:text="${mark.mark}">
+                            </span>
+                        </th:block>
+                        <span hidden="hidden" class="mark-description" th:data-mark-id="${mark.markId}"
+                              th:text="${mark.description}"></span>
+                    </span>
                     </th:block>
-
-
                 </td>
                 <td>
-                    <a class="btn btn-info edit-class-btn"
+                    <a hidden="hidden" class="btn btn-info view-mark-btn"
+                       data-bs-toggle="modal" data-bs-target="#editMark">VIEW</a>
+                    <a class="btn btn-info add-mark-btn"
                        data-bs-toggle="modal" data-bs-target="#addMark"
                        th:onclick="'setStudentId(' + ${student.personId} + ')'">ADD MARK</a>
                 </td>
@@ -288,8 +299,32 @@
 
     function setStudentId(studentId) {
         const form = document.getElementById('addMarkForm');
-        form.action = '/teacher/addMark/' + studentId;
+        form.action = '/teacher/addMark?studentId=' + studentId;
     }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const gradeTiles = document.querySelectorAll(".grade-tile");
+        gradeTiles.forEach(tile => {
+            tile.addEventListener("click", function () {
+                const markLevel = this.textContent.trim();
+                const markDescription = this.nextElementSibling.textContent.trim();
+                const markId = this.nextElementSibling.getAttribute("data-mark-id");
+                const viewButton = document.querySelector(".view-mark-btn");
+                const editForm = document.getElementById("editMarkForm");
+
+                document.getElementById("editMarkLevel").value = markLevel;
+                document.getElementById("editMarkDescription").value = markDescription;
+                document.getElementById("submitDeleteMark").href = `/teacher/deleteMark?markId=${markId}`;
+
+                editForm.action = `/teacher/editMark?markId=${markId}`;
+                document.getElementById("submitEditMark").addEventListener("click", function () {
+                    document.getElementById("editMarkForm").submit();
+                });
+
+                viewButton.click();
+            });
+        });
+    });
 </script>
 <!-- //move top -->
 
