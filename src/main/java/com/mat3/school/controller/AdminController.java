@@ -35,15 +35,25 @@ public class AdminController {
     @RequestMapping("/displayClasses")
     public ModelAndView displayClasses() {
         List<SchoolClass> schoolClasses = schoolClassRepository.findAll();
-        ModelAndView modelAndView = new ModelAndView("classes.html");
+        ModelAndView modelAndView = new ModelAndView("classes");
         modelAndView.addObject("schoolClasses", schoolClasses);
         modelAndView.addObject("schoolClass", new SchoolClass());
+        modelAndView.addObject("toEditSchoolClass", new SchoolClass());
         return modelAndView;
     }
 
     @PostMapping("/addNewClass")
-    public ModelAndView addNewClass(@ModelAttribute("schoolClass") SchoolClass schoolClass) {
+    public ModelAndView addNewClass(@ModelAttribute("toEditSchoolClass") SchoolClass schoolClass) {
         schoolClassRepository.save(schoolClass);
+        ModelAndView modelAndView = new ModelAndView("redirect:/admin/displayClasses");
+        return modelAndView;
+    }
+
+    @PostMapping("/editClass")
+    public ModelAndView editClass(@RequestParam int classId, @ModelAttribute("schoolClass") SchoolClass schoolClass) {
+        SchoolClass oldSchoolClass = schoolClassRepository.findById(classId).orElse(new SchoolClass());
+        oldSchoolClass.setName(schoolClass.getName());
+        schoolClassRepository.save(oldSchoolClass);
         ModelAndView modelAndView = new ModelAndView("redirect:/admin/displayClasses");
         return modelAndView;
     }

@@ -6,7 +6,10 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
+
+import java.time.LocalDate;
 
 /*
 @Data annotation is provided by Lombok library which generates getter, setter,
@@ -16,6 +19,7 @@ This makes our code short and clean.
 @Data
 @Entity
 @Table(name = "contact_msg")
+@NoArgsConstructor
 public class Contact extends BaseEntity {
 
     @Id
@@ -50,4 +54,13 @@ public class Contact extends BaseEntity {
     private String message;
 
     private String status;
+
+    public Contact(String name, String mobileNum, String email, String subject, String message, String status) {
+        this.name = name;
+        this.mobileNum = mobileNum;
+        this.email = email;
+        this.subject = subject;
+        this.message = message;
+        this.status = status;
+    }
 }

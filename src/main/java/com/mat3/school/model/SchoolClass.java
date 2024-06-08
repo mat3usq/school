@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -13,6 +14,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
 @Table(name = "class")
 public class SchoolClass extends BaseEntity {
     @Id
@@ -26,4 +28,8 @@ public class SchoolClass extends BaseEntity {
 
     @OneToMany(mappedBy = "schoolClass", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, targetEntity = Person.class)
     private Set<Person> persons;
+
+    public SchoolClass(String name) {
+        this.name = name;
+    }
 }

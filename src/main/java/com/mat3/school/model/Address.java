@@ -8,10 +8,12 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
 @Data
 @Entity
+@NoArgsConstructor
 public class Address extends BaseEntity {
 
     @Id
@@ -36,4 +38,11 @@ public class Address extends BaseEntity {
     @NotBlank(message = "Zip Code must not be blank")
     @Pattern(regexp = "(^$|[0-9]{5})", message = "Zip Code must be 5 digits")
     private String zipCode;
+
+    public Address(String address1, String city, String state, String zipCode) {
+        this.address1 = address1;
+        this.city = city;
+        this.state = state;
+        this.zipCode = zipCode;
+    }
 }

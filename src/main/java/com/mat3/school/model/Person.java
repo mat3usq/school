@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mat3.school.annotations.FieldsValueMatch;
 import com.mat3.school.annotations.PasswordValidator;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -19,6 +20,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
 @FieldsValueMatch.List({
         @FieldsValueMatch(
                 field = "pwd",
@@ -83,4 +85,13 @@ public class Person extends BaseEntity {
             joinColumns = {@JoinColumn(name = "person_id", referencedColumnName = "personId")},
             inverseJoinColumns = {@JoinColumn(name = "course_id", referencedColumnName = "courseId")})
     private Set<Courses> courses = new HashSet<>();
+
+    public Person(String name, String mobileNumber, String email, String pwd, Roles roles, Address address) {
+        this.name = name;
+        this.mobileNumber = mobileNumber;
+        this.email = email;
+        this.pwd = pwd;
+        this.roles = roles;
+        this.address = address;
+    }
 }
