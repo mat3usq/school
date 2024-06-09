@@ -282,21 +282,6 @@
         document.documentElement.scrollTop = 0;
     }
 
-    document.addEventListener('DOMContentLoaded', function () {
-        document.querySelectorAll('.edit-class-btn').forEach(function (button) {
-            button.addEventListener('click', function () {
-                const classId = this.getAttribute('data-class-id');
-                const className = this.getAttribute('data-class-name');
-
-                const form = document.getElementById('editClassForm');
-                form.action = '/admin/editClass?classId=' + classId;
-
-                const classNameInput = document.getElementById('editClassName');
-                classNameInput.value = className;
-            });
-        });
-    });
-
     function setStudentId(studentId) {
         const form = document.getElementById('addMarkForm');
         form.action = '/teacher/addMark?studentId=' + studentId;
