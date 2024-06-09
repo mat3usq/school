@@ -37,11 +37,14 @@ VALUES ('STUDENT', CURDATE(), 'DBA');
 INSERT INTO `person` (`name`, `email`, `mobile_number`, `pwd`, `role_id`, `created_at`, `created_by`)
 VALUES ('admin', 'admin', '777666555', '$2a$12$t823mpw6SD8Xn.f3MVeV/Of62q.1XSX6.VVcg.auhwUCbi6OxZAZe', 1, CURDATE(), 'DBA');
 
-INSERT INTO `person` (`name`, `email`, `mobile_number`, `pwd`, `role_id`, `created_at`, `created_by`)
-VALUES ('teacher', 'teacher', '444555666', '$2a$12$kh080k5CBAKMlgrJYaFMFupfuJYGuoPWqjT.VlvBSDnywbl4uyrjK', 2, CURDATE(), 'DBA');
+INSERT INTO `person` (`name`, `email`, `mobile_number`, `pwd`, `role_id`, `created_at`, `created_by`, `teacher_subject`)
+VALUES ('teacher', 'teacher', '444555666', '$2a$12$kh080k5CBAKMlgrJYaFMFupfuJYGuoPWqjT.VlvBSDnywbl4uyrjK', 2, CURDATE(), 'DBA', "WF");
 
-INSERT INTO `person` (`name`, `email`, `mobile_number`, `pwd`, `role_id`, `created_at`, `created_by`)
-VALUES ('teacher2', 'teacher@gmail.com', '444555666', '$2a$12$kh080k5CBAKMlgrJYaFMFupfuJYGuoPWqjT.VlvBSDnywbl4uyrjK', 2, CURDATE(), 'DBA');
+INSERT INTO `person` (`name`, `email`, `mobile_number`, `pwd`, `role_id`, `created_at`, `created_by`, `teacher_subject`)
+VALUES ('teacher2', 'teacher@gmail.com', '444555666', '$2a$12$kh080k5CBAKMlgrJYaFMFupfuJYGuoPWqjT.VlvBSDnywbl4uyrjK', 2, CURDATE(), 'DBA', "Math");
+
+INSERT INTO `person` (`name`, `email`, `mobile_number`, `pwd`, `role_id`, `created_at`, `created_by`, `teacher_subject`)
+VALUES ('teacher3', 'teacher2@gmail.com', '444555666', '$2a$12$kh080k5CBAKMlgrJYaFMFupfuJYGuoPWqjT.VlvBSDnywbl4uyrjK', 2, CURDATE(), 'DBA', "IT");
 
 INSERT INTO `person` (`name`, `email`, `mobile_number`, `pwd`, `role_id`, `created_at`, `created_by`)
 VALUES ('student', 'student', '111222333', '$2a$12$7J4G7W4ppyLy0p3jDmAAnetLHvykPdsKl4dFxWtMAXMxMMNc02LAG', 3, CURDATE(), 'DBA');

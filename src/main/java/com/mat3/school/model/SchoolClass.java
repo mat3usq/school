@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.util.Objects;
 import java.util.Set;
 
 @Getter
@@ -28,10 +29,23 @@ public class SchoolClass extends BaseEntity {
     @OneToMany(mappedBy = "studentClasses", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, targetEntity = Person.class)
     private Set<Person> students;
 
-    @ManyToMany(mappedBy = "teacherClasses", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @ManyToMany(mappedBy = "teacherClasses", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST, targetEntity = Person.class)
     private Set<Person> teachers;
 
     public SchoolClass(String name) {
         this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SchoolClass schoolClass = (SchoolClass) o;
+        return classId == schoolClass.classId;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(classId);
     }
 }

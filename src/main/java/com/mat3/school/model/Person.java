@@ -15,6 +15,7 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Getter
@@ -80,6 +81,10 @@ public class Person extends BaseEntity {
     @JoinColumn(name = "class_id", referencedColumnName = "classId")
     private SchoolClass studentClasses;
 
+    @NotBlank(message = "Subject must not be blank")
+    @Size(min = 2, message = "Subject must be at least 2 characters long")
+    private String teacherSubject;
+
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinTable(
             name = "person_teacher_class",
@@ -101,5 +106,18 @@ public class Person extends BaseEntity {
         this.pwd = pwd;
         this.roles = roles;
         this.address = address;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Person person = (Person) o;
+        return personId == person.personId;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(personId);
     }
 }

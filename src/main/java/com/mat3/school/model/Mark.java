@@ -28,4 +28,8 @@ public class Mark extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "studentId")
     private Person student;
+
+    @ManyToOne
+    @JoinColumn(name = "teacherId")
+    private Person teacher;
 }

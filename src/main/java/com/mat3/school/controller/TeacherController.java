@@ -124,11 +124,14 @@ public class TeacherController {
     @GetMapping("/displayMarks")
     public ModelAndView displayClasses(HttpSession session) {
         List<SchoolClass> schoolClasses;
-        if (((Person) session.getAttribute("loggedInPerson")).getRoles().getRoleName().equals(SchoolConstants.ADMIN_ROLE))
+        List<Mark> marks;
+        if (((Person) session.getAttribute("loggedInPerson")).getRoles().getRoleName().equals(SchoolConstants.ADMIN_ROLE)) {
+            marks = markRepository.findAll();
             schoolClasses = schoolClassRepository.findAll();
-        else
+        } else {
+            marks = markRepository.findAllByTeacher(((Person) session.getAttribute("loggedInPerson")));
             schoolClasses = schoolClassRepository.findAllByTeacherId(((Person) session.getAttribute("loggedInPerson")).getPersonId());
-        List<Mark> marks = markRepository.findAll();
+        }
         ModelAndView modelAndView = new ModelAndView("classesWithMarks");
         modelAndView.addObject("schoolClasses", schoolClasses);
         modelAndView.addObject("marks", marks);
@@ -138,9 +141,12 @@ public class TeacherController {
     }
 
     @PostMapping("/addMark")
-    public ModelAndView addMarkToStudent(@RequestParam("studentId") int studentId, @ModelAttribute("newMark") Mark mark) {
+    public ModelAndView addMarkToStudent(@RequestParam("studentId") int studentId, @ModelAttribute("newMark") Mark mark, HttpSession session) {
+        Person person = (Person) session.getAttribute("loggedInPerson");
         if (personRepository.findById(studentId).isPresent())
             mark.setStudent(personRepository.findById(studentId).get());
+        if (person.getRoles().getRoleName().equals(SchoolConstants.TEACHER_ROLE))
+            mark.setTeacher(person);
         markRepository.save(mark);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/teacher/displayMarks");

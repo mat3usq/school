@@ -31,6 +31,7 @@ public class ProfileController {
         Person person = (Person) session.getAttribute("loggedInPerson");
         Profile profile = new Profile();
         profile.setName(person.getName());
+        profile.setTeacherSubject(person.getTeacherSubject());
         profile.setMobileNumber(person.getMobileNumber());
         profile.setEmail(person.getEmail());
         if (person.getAddress() != null && person.getAddress().getAddressId() > 0) {
@@ -40,7 +41,7 @@ public class ProfileController {
             profile.setState(person.getAddress().getState());
             profile.setZipCode(person.getAddress().getZipCode());
         }
-        ModelAndView modelAndView = new ModelAndView("profile.html");
+        ModelAndView modelAndView = new ModelAndView("profile");
         modelAndView.addObject("profile", profile);
         return modelAndView;
     }
@@ -52,6 +53,7 @@ public class ProfileController {
 
         Person person = (Person) session.getAttribute("loggedInPerson");
         person.setName(profile.getName());
+        person.setTeacherSubject(profile.getTeacherSubject());
         person.setEmail(profile.getEmail());
         person.setMobileNumber(profile.getMobileNumber());
         if (person.getAddress() == null || !(person.getAddress().getAddressId() > 0))

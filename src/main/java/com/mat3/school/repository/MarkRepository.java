@@ -1,6 +1,7 @@
 package com.mat3.school.repository;
 
 import com.mat3.school.model.Mark;
+import com.mat3.school.model.Person;
 import com.mat3.school.model.SchoolClass;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -11,4 +12,5 @@ import java.util.List;
 
 @Repository
 public interface MarkRepository extends JpaRepository<Mark, Integer> {
+    List<Mark> findAllByTeacher(Person teacher);
 }

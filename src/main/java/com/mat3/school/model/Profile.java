@@ -13,6 +13,10 @@ public class Profile {
     @Size(min = 3, message = "Name must be at least 3 characters long")
     private String name;
 
+    @NotBlank(message = "Subject must not be blank")
+    @Size(min = 2, message = "Subject must be at least 2 characters long")
+    private String teacherSubject;
+
     @NotBlank(message = "Mobile number must not be blank")
     @Pattern(regexp = "(^$|[0-9]{9})", message = "Mobile number must be 9 digits")
     private String mobileNumber;

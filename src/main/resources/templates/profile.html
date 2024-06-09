@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 
 <head>
     <!-- Required meta tags -->
@@ -48,6 +48,12 @@
                         <label class="control-label" for="name">Name:</label>
                         <input type="text" th:field="*{name}" id="name" class="contact-input"/>
                         <div class="alert alert-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+
+                        <th:block sec:authorize="hasRole('ROLE_TEACHER')">
+                            <label class="control-label" for="teacherSubject">Subject:</label>
+                            <input type="text" th:field="*{teacherSubject}" id="teacherSubject" class="contact-input"/>
+                            <div class="alert alert-danger" th:if="${#fields.hasErrors('teacherSubject')}" th:errors="*{teacherSubject}"></div>
+                        </th:block>
 
                         <div class="row">
                             <div class="col-sm-6">
