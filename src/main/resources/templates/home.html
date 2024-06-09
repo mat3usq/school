@@ -1,23 +1,15 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
 <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Schoolify</title>
-    <!-- Google fonts -->
     <link href="//fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <!-- Template CSS Style link -->
     <link rel="stylesheet" href="assets/css/style-starter.css">
 </head>
-
 <body>
-<!-- header -->
 <div th:replace="~{header :: header}">...</div>
-<!-- //header -->
 
-<!-- banner section -->
 <section id="home" class="w3l-banner py-5">
     <div class="banner-content">
         <div class="container py-4">
@@ -44,9 +36,7 @@
         </div>
     </div>
 </section>
-<!-- //banner section -->
 
-<!-- home 4grids block -->
 <section class="services-w3l-block py-5" id="features">
     <div class="container py-md-5 py-4">
         <div class="title-main text-center mx-auto mb-md-5 mb-4" style="max-width:500px;">
@@ -85,9 +75,7 @@
         </div>
     </div>
 </section>
-<!-- home 4grids block -->
 
-<!-- home image with content block -->
 <section class="w3l-servicesblock pt-lg-5 pt-4 pb-5 mb-lg-5" id="about">
     <div class="container pb-md-5 pb-4">
         <div class="row pb-xl-5 align-items-center">
@@ -115,9 +103,7 @@
         </div>
     </div>
 </section>
-<!-- //home image with content block -->
 
-<!-- why choose block -->
 <section class="w3l-service-1 py-5">
     <div class="container py-md-5 py-4">
         <div class="title-main text-center mx-auto mb-md-5 mb-4" style="max-width:500px;">
@@ -138,9 +124,7 @@
         </div>
     </div>
 </section>
-<!-- //why choose block -->
 
-<!-- stats block -->
 <section class="w3-stats pt-4 pb-5" id="stats">
     <div class="container pb-md-5 pb-4">
         <div class="title-main text-center mx-auto mb-md-5 mb-4" style="max-width:500px;">
@@ -179,9 +163,7 @@
         </div>
     </div>
 </section>
-<!-- //stats block -->
 
-<!-- testimonials block -->
 <section class="w3l-index4 py-5" id="testimonials">
     <div class="container py-md-5 py-4">
         <div class="content-slider text-center">
@@ -243,9 +225,7 @@
         </div>
     </div>
 </section>
-<!-- //testimonials block -->
 
-<!-- courses section -->
 <div class="w3l-grids-block-5 home-course-bg py-5" id="courses">
     <div class="container py-md-5 py-4">
         <div class="title-main text-center mx-auto mb-md-5 mb-4" style="max-width:500px;">
@@ -323,9 +303,7 @@
         </div>
     </div>
 </div>
-<!-- //courses section -->
 
-<!-- call block -->
 <section class="w3l-call-to-action-6">
     <div class="container py-md-5 py-sm-4 py-5">
         <div class="d-lg-flex align-items-center justify-content-between">
@@ -345,19 +323,13 @@
         </div>
     </div>
 </section>
-<!-- //call block -->
 
-<!-- footer block -->
 <div th:replace="~{footer :: footer}">...</div>
-<!-- //footer block -->
 
-<!-- Js scripts -->
-<!-- move top -->
 <button onclick="topFunction()" id="movetop" title="Go to top">
     <span class="fas fa-level-up-alt" aria-hidden="true"></span>
 </button>
 <script>
-    // When the user scrolls down 20px from the top of the document, show the button
     window.onscroll = function () {
         scrollFunction()
     };
@@ -370,27 +342,14 @@
         }
     }
 
-    // When the user clicks on the button, scroll to the top of the document
     function topFunction() {
         document.body.scrollTop = 0;
         document.documentElement.scrollTop = 0;
     }
 </script>
-<!-- //move top -->
-
-<!-- common jquery plugin -->
 <script src="assets/js/jquery-3.3.1.min.js"></script>
-<!-- //common jquery plugin -->
-
-<!-- /counter-->
 <script src="assets/js/counter.js"></script>
-<!-- //counter-->
-
-<!-- theme switch js (light and dark)-->
 <script src="assets/js/theme-change.js"></script>
-<!-- //theme switch js (light and dark)-->
-
-<!-- MENU-JS -->
 <script>
     $(window).on("scroll", function () {
         var scroll = $(window).scrollTop();
@@ -402,7 +361,6 @@
         }
     });
 
-    //Main navigation Active Class Add Remove
     $(".navbar-toggler").on("click", function () {
         $("header").toggleClass("active");
     });
@@ -417,9 +375,6 @@
         });
     });
 </script>
-<!-- //MENU-JS -->
-
-<!-- disable body scroll which navbar is in active -->
 <script>
     $(function () {
         $('.navbar-toggler').click(function () {
@@ -427,12 +382,6 @@
         })
     });
 </script>
-<!-- //disable body scroll which navbar is in active -->
-
-<!-- bootstrap -->
 <script src="assets/js/bootstrap.min.js"></script>
-<!-- //bootstrap -->
-<!-- //Js scripts -->
 </body>
-
 </html>

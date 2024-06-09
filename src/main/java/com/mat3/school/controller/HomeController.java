@@ -9,5 +9,4 @@ public class HomeController {
     public String displayHomePage() {
         return "home.html";
     }
-
 }

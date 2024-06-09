@@ -55,7 +55,6 @@ public class Person extends BaseEntity {
     @NotBlank(message = "Confirm Email must not be blank")
     @Email(message = "Please provide a valid confirm email address")
     @Transient
-    @JsonIgnore
     private String confirmEmail;
 
     @NotBlank(message = "Password must not be blank")
@@ -66,7 +65,6 @@ public class Person extends BaseEntity {
     @NotBlank(message = "Confirm Password must not be blank")
     @Size(min = 5, message = "Confirm Password must be at least 5 characters long")
     @Transient
-    @JsonIgnore
     private String confirmPwd;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST, targetEntity = Roles.class)

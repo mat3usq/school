@@ -15,7 +15,6 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 @NoArgsConstructor
 public class Address extends BaseEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native")

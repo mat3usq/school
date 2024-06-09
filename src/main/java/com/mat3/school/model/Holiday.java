@@ -3,10 +3,12 @@ package com.mat3.school.model;
 import lombok.Data;
 
 import jakarta.persistence.*;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
 @Table(name = "holidays")
+@NoArgsConstructor
 public class Holiday extends BaseEntity {
 
     @Id

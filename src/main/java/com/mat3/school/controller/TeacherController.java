@@ -39,9 +39,7 @@ public class TeacherController {
 
     @GetMapping("/displayCourses")
     public ModelAndView displayCourses() {
-//        List<Courses> courses = coursesRepository.findByOrderByName();
         List<Courses> courses = coursesRepository.findAll(Sort.by("name").ascending());
-
         ModelAndView modelAndView = new ModelAndView("courses_secure");
         modelAndView.addObject("courses", courses);
         modelAndView.addObject("course", new Courses());

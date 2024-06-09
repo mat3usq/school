@@ -12,26 +12,20 @@ import org.springframework.security.web.SecurityFilterChain;
 public class ProjectSecurityConfig {
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
-        // Permit All Requests inside the Web Application
         http.csrf((csrf) -> csrf.ignoringRequestMatchers("/saveMsg")
                         .ignoringRequestMatchers("/public/**")
-                        .ignoringRequestMatchers("/data/**")
-                        .ignoringRequestMatchers("/api/**")
-                        .ignoringRequestMatchers("/schoolify/actuator/**"))
+                        .ignoringRequestMatchers("/data/**"))
                 .authorizeHttpRequests((requests) -> requests.requestMatchers("/dashboard").authenticated()
                         .requestMatchers("/displayMessages/**").hasRole("ADMIN")
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/teacher/**").hasAnyRole("TEACHER", "ADMIN")
                         .requestMatchers("/closeMsg/**").hasRole("ADMIN")
                         .requestMatchers("/data/**").hasRole("ADMIN")
-                        .requestMatchers("/schoolify/actuator/**").hasRole("ADMIN")
-                        .requestMatchers("/api/**").authenticated()
                         .requestMatchers("/displayProfile").authenticated()
                         .requestMatchers("/updateProfile").authenticated()
                         .requestMatchers("/student/**").hasRole("STUDENT")
                         .requestMatchers("/", "/home").permitAll()
                         .requestMatchers("/holidays/**").permitAll()
-                        .requestMatchers("/actuator/**").permitAll()
                         .requestMatchers("/contact").permitAll()
                         .requestMatchers("/saveMsg").permitAll()
                         .requestMatchers("/courses").permitAll()
