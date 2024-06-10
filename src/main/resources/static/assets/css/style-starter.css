@@ -21374,9 +21374,15 @@ h4.inner-text-title {
 }
 
 .overview-item--c6 {
-    background-image: -moz-linear-gradient(90deg, #6a3093 0%, #a044ff 100%);
-    background-image: -webkit-linear-gradient(90deg, #6a3093 0%, #a044ff 100%);
-    background-image: -ms-linear-gradient(90deg, #6a3093 0%, #a044ff 100%);
+    background-image: -moz-linear-gradient(90deg, #6a3093 0%, #ad6eef 100%);
+    background-image: -webkit-linear-gradient(90deg, #6a3093 0%, #ad6eef 100%);
+    background-image: -ms-linear-gradient(90deg, #6a3093 0%, #ad6eef 100%);
+}
+
+.overview-item--c7 {
+    background-image: -moz-linear-gradient(90deg, #ff6f91 0%, #ffc75f 100%);
+    background-image: -webkit-linear-gradient(90deg, #ff6f91 0%, #ffc75f 100%);
+    background-image: -ms-linear-gradient(90deg, #ff6f91 0%, #ffc75f 100%);
 }
 
 .overview-box .icon {

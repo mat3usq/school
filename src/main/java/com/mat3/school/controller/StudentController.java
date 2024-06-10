@@ -37,12 +37,13 @@ public class StudentController {
     public ModelAndView displayMarks(HttpSession session) {
         Person person = (Person) session.getAttribute("loggedInPerson");
         List<Mark> marks = new ArrayList<>();
-        person.getStudentClasses().getTeachers().forEach(t -> {
-            markRepository.findAllByTeacher(t).forEach(m -> {
-                if (m.getStudent().equals(person))
-                    marks.add(m);
+        if (person.getStudentClasses() != null)
+            person.getStudentClasses().getTeachers().forEach(t -> {
+                markRepository.findAllByTeacher(t).forEach(m -> {
+                    if (m.getStudent().equals(person))
+                        marks.add(m);
+                });
             });
-        });
         ModelAndView modelAndView = new ModelAndView("marks");
         modelAndView.addObject("marks", marks);
         modelAndView.addObject("student", person);
