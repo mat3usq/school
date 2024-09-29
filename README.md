@@ -1,42 +1,43 @@
-# Projekt "School"
+# Schoolify - Educational Management Web Application
 
-## Opis
-Projekt "School" to zaawansowana aplikacja webowa zaprojektowana z myślą o placówkach oświatowych, ułatwiająca zarządzanie procesami edukacyjnymi. Wykorzystując framework Spring Boot, aplikacja oferuje bogaty zestaw funkcjonalności umożliwiających efektywne zarządzanie kontaktami, kursami oraz uczniami, a także dostarcza zaawansowane narzędzia administracyjne.
+## Description
 
-## Główne Funkcjonalności
+Schoolify is a web application designed for educational institutions to streamline and manage educational processes. Built using the Spring Boot framework, it provides functionalities for managing contacts, courses, students, grades, and offers advanced administrative tools.
 
-### Autentykacja i Autoryzacja
-Aplikacja zapewnia bezpieczny dostęp do swoich zasobów za pomocą Spring Security, oferując:
-- Zarządzanie sesjami użytkowników
-- Kontrola dostępu na podstawie przypisanych ról
-- Ochronę przed atakami CSRF
+## Main Features
 
-### Zarządzanie Kontaktami
-Użytkownicy mogą łatwo zarządzać informacjami kontaktowymi, w tym:
-- Dodawanie nowych kontaktów
-- Aktualizacja istniejących informacji
-- Usuwanie kontaktów
-- Przeglądanie szczegółów kontaktów
+1. **Authentication and Authorization**
+   - Secure access via Spring Security
+   - Session management for users
+   - Role-based access control
+   - Protection against CSRF attacks
 
-### Zarządzanie Kursami
-Funkcjonalność ta umożliwia:
-- Przeglądanie dostępnych kursów
-- Zapisywanie się na kursy
-- Zarządzanie zapisami przez uczniów oraz administratorów
+2. **Contact Management**
+   - Add new contacts
+   - Update existing contact information
+   - Delete contacts
+   - View contact details
 
-### Panel Administracyjny
-Zaawansowane narzędzie dla administratorów umożliwiające:
-- Zarządzanie użytkownikami systemu
-- Zarządzanie kursami i ich treścią
-- Kontrolę nad wiadomościami i komunikacją w systemie
+3. **Course/Class Management**
+   - View available courses/classes (for teachers)
+   - Create, edit, and delete courses/classes
+   - Manage student enrollments
 
-## Technologie
-Projekt został zrealizowany z wykorzystaniem:
+4. **Grade Management**
+   - Add, edit, and delete grades for specific students
+   - View grades assigned to individual students
+
+5. **Administrative Panel**
+   - User management
+   - Course and class management
+   - Grade and comment management
+   - Control over system messages
+
+## Technologies Used
+
 - Spring Boot
 - Spring Security
 - Java
-- Baza Danych MySQL
-- AWS Cloud
+- MySQL Database (hosted on AWS Cloud)
 
-## Licencja
-Stworzone z ❤ przez mat3usq.
+This README provides a concise overview of the project's core functionality and technology stack.
